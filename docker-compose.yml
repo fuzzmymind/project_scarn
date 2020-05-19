@@ -1,0 +1,28 @@
+version: "3"
+services:
+  web:
+    stdin_open: true
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+    environment: 
+      - HOST=0.0.0.0
+  api:
+    stdin_open: true
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    ports:
+      - 8080:8080
